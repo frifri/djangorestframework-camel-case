@@ -1,5 +1,8 @@
-from collections import OrderedDict
 import re
+
+from collections import OrderedDict
+
+from django.conf import settings
 
 first_cap_re = re.compile('(.)([A-Z][a-z]+)')
 all_cap_re = re.compile('([a-z0-9])([A-Z])')
@@ -32,7 +35,12 @@ def underscoreize(data):
     if isinstance(data, dict):
         new_dict = {}
         for key, value in data.items():
-            new_key = camel_to_underscore(key)
+            # This is to make sure we don't overwrite a language code
+            if key in settings.SUPPORTED_LANGUAGE_CODES:
+                new_key = key
+            else:
+                new_key = camel_to_underscore(key)
+
             new_dict[new_key] = underscoreize(value)
         return new_dict
     if isinstance(data, (list, tuple)):
