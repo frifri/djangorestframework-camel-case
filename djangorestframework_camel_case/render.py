@@ -4,6 +4,8 @@ from djangorestframework_camel_case.util import camelize
 
 
 class CamelCaseJSONRenderer(JSONRenderer):
+    charset = 'utf-8'
+
     def render(self, data, *args, **kwargs):
         return super(CamelCaseJSONRenderer, self).render(camelize(data), *args,
                                                          **kwargs)
