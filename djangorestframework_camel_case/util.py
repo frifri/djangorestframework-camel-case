@@ -20,9 +20,10 @@ def camelize(data):
             new_dict[new_key] = camelize(value)
         return new_dict
     if isinstance(data, (list, tuple)):
+        new_list = []
         for i in range(len(data)):
-            data[i] = camelize(data[i])
-        return data
+            new_list.append(camelize(data[i]))
+        return new_list
     return data
 
 
@@ -44,7 +45,8 @@ def underscoreize(data):
             new_dict[new_key] = underscoreize(value)
         return new_dict
     if isinstance(data, (list, tuple)):
+        new_list = []
         for i in range(len(data)):
-            data[i] = underscoreize(data[i])
+            new_list.append(underscoreize(data[i]))
         return data
     return data
